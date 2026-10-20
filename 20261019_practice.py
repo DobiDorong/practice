@@ -1,0 +1,5 @@
+print("측정 온도")
+print("75")
+print("git code commit")
+print("git code commit2")
+print("git code commit3")
