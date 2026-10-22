@@ -14,13 +14,17 @@
 # print("이름\t상태")
 # print("첫줄\n둘째 줄")
 
-print("가동 점검표\n1. 온도 확인\n2. 압력 확인")
+print("""가동 점검표
+1. 온도 확인
+2. 압력 확인""")
 guide = "가동 점검표\n1. 온도 확인\n2.압력 확인"
 print(guide)
 code = "PUMP_A"
 status = "정상"
 date = "2025-01-15"
 oper_time = str(15)
-print("설비: "+code+'\n상태: '+status+"\n날짜: "+date+"\n가동시간: "+oper_time)
+card = "설비: "+code+"\n상태: "+status+"\n날짜: "+date+"\n가동시간: "+oper_time
+print(card)
+#print("설비: "+code+'\n상태: '+status+"\n날짜: "+date+"\n가동시간: "+oper_time)
 #print(code+"/" + status+"/" + date)
 
