@@ -37,7 +37,7 @@
 # print(data.find('_'), data.find('y'))
 
 # index 
-# 주의) find와 같은 값을 출력하지만 값이 없으면 오류가 뜸
+# 주의) 값이 없으면 오류가 뜸
 # email = 'hong@company.com'
 # at = email.index('@')
 # print(at)
