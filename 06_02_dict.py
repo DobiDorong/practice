@@ -34,9 +34,9 @@
 # print("압력" in sensors)
 
 # keys / values
-# sensors = {"모터온도":78,"진동":0.5}
-# print(list(sensors.keys()))
-# print(list(sensors.values()))
+sensors = {"모터온도":78,"진동":0.5}
+print(list(sensors.keys()))
+print(list(sensors.values()))
 # avg = sum(sensors.values()) / len(sensors)
 # print(avg)
 

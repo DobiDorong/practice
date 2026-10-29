@@ -54,7 +54,7 @@
 #     total += i
 # print("합:",total)
 
-# enumerate: 순서 + 값을 함께 준다
+# # enumerate: 순서 + 값을 함께 준다
 # temps = [25, 26, 24]
 # for idx, t in enumerate(temps):
 #     print(idx + 1, "번째:",t)   # 1번째: 25...
