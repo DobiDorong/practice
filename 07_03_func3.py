@@ -40,13 +40,14 @@
 # # print(value)
 
 # 함수 조합 (함수 설계: 입력/처리/출력)
-def get_avg(values):
-    return sum(values)/len(values)
-def judge(avg, limit=90):
-    if avg > limit:
-        return "위험"
-    else:
-        return "정상"
-temps = [78, 86, 92]
-avg = get_avg(temps)
-print("평균",round(avg,1),"->", judge(avg))
+# def get_avg(values):
+#     return sum(values)/len(values)
+# def judge(avg, limit=90):
+#     if avg > limit:
+#         return "위험"
+#     else:
+#         return "정상"
+# temps = [78, 86, 92]
+# avg = get_avg(temps)
+# print("평균",round(avg,1),"->", judge(avg))
+

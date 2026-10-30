@@ -55,8 +55,8 @@
 # print(low, high)
 
 def report(a,b):
-     return print(a,b)
-none = report(5,10)
+     print(a,b)
+none = report("품질",10)
 print(none)     # None -> reture 값이 없는 함수 호출하면 나오는 값
 
 # 실습5 
