@@ -27,12 +27,11 @@ ENCO = "utf-8"
 #     f.write("쓰기 테스트")
 
 # 실습2
-DATA = "data/test.txt"
-with open(DATA,"w",encoding=ENCO) as f:
-    f.write(f'AI를 활용한 데이터 분석\n기간: 2026.10 ~')
-    f.write("안녕")
-with open(DATA,"r",encoding=ENCO) as f:
-    print(f.read())
+# DATA = "data/test.txt"
+# with open(DATA,"w",encoding=ENCO) as f:
+#     f.write(f'AI를 활용한 데이터 분석\n기간: 2026.10 ~')
+# with open(DATA,"r",encoding=ENCO) as f:
+#     print(f.read())
 
 # # 실습3
 # with open(DATA,"a",encoding=ENCO) as f:
@@ -47,11 +46,28 @@ with open(DATA,"r",encoding=ENCO) as f:
 #         print(row)
 
 # csv.writer
-with open("data/08_summary.csv","w",encoding=ENCO,newline="") as f:
-    writer = csv.writer(f)
-    writer.writerow(["설비ID", "상태"])     # 헤더
-    writer.writerow(["PRESS-01", 1])
-    writer.writerow(["PRESS-02", 1])
+# with open("data/08_summary.csv","w",encoding=ENCO,newline="") as f:
+#     writer = csv.writer(f)
+#     writer.writerow(["설비ID", "상태"])     # 헤더
+#     writer.writerow(["PRESS-01", 1])
+#     writer.writerow(["PRESS-02", 1])
 
-with open("data/08_summary.csv","r",encoding=ENCO) as f:
-    print(f.read())
+# with open("data/08_summary.csv","r",encoding=ENCO) as f:
+#     print(f.read())
+
+# 실습6
+new = []
+with open(FILE,"r",encoding=ENCO) as f:
+    reader = csv.reader(f)
+    header = next(reader)   # 헤더 제거
+    for row in reader:
+        if float(row[4]) > 90:
+            new.append(row)
+print(header)
+
+with open("data/08_filtered.csv", "w", encoding=ENCO, newline="") as f:
+    writer = csv.writer(f)
+    writer.writerow(header)
+    writer.writerows(new) 
+
+print("저장된 행 개수:", len(new))
