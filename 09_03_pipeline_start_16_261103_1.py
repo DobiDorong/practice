@@ -137,13 +137,19 @@ def save_report(path, total_rows, valid_rows, rejected, stats):
 
 def verify_part_counts(valid_rows):
     """[실습 6] 유효 행을 부품별로 다시 묶고 합계가 전체와 같은지 확인."""
-    by_part_valid=group_by_part(valid_rows)[0]
-    part_counts = {}
-    for key, part_rows in by_part_valid.items():
-        part_stats = calc_stats(part_rows, 2)
-        part_counts[key] = len(part_rows)
-    total_count = sum(part_counts.values())
-    print(f"[6단계] 부품별 건수: {part_counts} / 합계: {total_count} / 전체 유효 건수: {len(valid_rows)}/{total_count == len(valid_rows)}")
+    by_valid, _ = group_by_part(valid_rows)     # 정상 데이터 15건 -> 부품별로 분류 / _: 부품명 누락 건수를 사용X
+    check_sum = 0
+    for v in sorted(by_valid):
+        check_sum += calc_stats(by_valid[v],2)["개수"]
+    print(check_sum == len(valid_rows))
+
+    # by_part_valid=group_by_part(valid_rows)[0]
+    # part_counts = {}
+    # for key, part_rows in by_part_valid.items():
+    #     part_stats = calc_stats(part_rows, 2)
+    #     part_counts[key] = len(part_rows)
+    # total_count = sum(part_counts.values())
+    # print(f"[6단계] 부품별 건수: {part_counts} / 합계: {total_count} / 전체 유효 건수: {len(valid_rows)}/{total_count == len(valid_rows)}")
     # TODO: group_by_part(valid_rows)를 재사용하고
     # 각 부품에 calc_stats(part_rows, 2)를 적용해 건수를 합산하세요.
 
