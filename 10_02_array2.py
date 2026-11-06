@@ -9,6 +9,7 @@ import csv
 # print(a[:])
 # print(a[::2])
 # print(a[:-1])
+# 2차원 인덱싱 행: a[행 번호], 열: a[:,열 번호], 특정 위치 a[행 번호, 열 번호]
 
 # 실습 1
 # rpm = []
@@ -131,16 +132,16 @@ import csv
 # print(mat.mean())           # 전체 평균
 
 # 실습6
-# data = []
-# with open("data/10_mct_tool.csv", "r", encoding = "utf-8") as f:
-#     reader = csv.reader(f)
-#     header = next(reader)
-#     for row in reader:
-#         data.append(row[4:])
-# data = np.array(data).astype(np.float64)
-# # print(data)
-# print(data.mean(axis = 0).round(1))
-# print(data.std(axis=0).round(1))
+data = []
+with open("data/10_mct_tool.csv", "r", encoding = "utf-8") as f:
+    reader = csv.reader(f)
+    header = next(reader)
+    for row in reader:
+        data.append(row[4:])
+data = np.array(data).astype(np.float64)
+# print(data)
+print(data.mean(axis = 0).round(1))
+print(data.std(axis=0).round(1))
 
 # 파일에서 배열로 불러오기(np.loadtxt)
 
