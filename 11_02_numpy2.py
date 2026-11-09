@@ -60,11 +60,81 @@ def col(c) :
 # print("이상값: ",temp[temp > upper], "이상 건 수:",np.sum(temp>upper))
 
 # 실습3
-time = col(0)
-temp = col(1)
-temp_mean = np.mean(temp)
-temp_std = np.std(temp)
-z = (temp-temp_mean)/temp_std
-max_z = (temp.max()-temp_mean)/temp_std
-print((time[np.abs(z) > 2]).astype(np.int64))
-print(round(max_z,2))
+# time = col(0)
+# temp = col(1)
+# temp_mean = np.mean(temp)
+# temp_std = np.std(temp)
+# z = (temp-temp_mean)/temp_std
+# print((time[np.abs(z) > 2]).astype(np.int64))
+# print(round(np.abs(z).max(),2))
+
+# 실습4
+# time = col(0)
+# temp = col(1)
+# temp_mean, temp_std = np.mean(temp), np.std(temp)
+# upper = (temp_mean + temp_std * 3).round(2)
+# over = time[temp > upper].astype(int)
+# print(upper, over)
+
+# 센서 간 상관관계 - corrcoef
+# - 세기는 절댓값이 정함. +0.99와 -0.99는 세기가 똑같고 방향만 반대
+# - 양수: 한 쪽이 오르면 다른 한 쪽도 오름 / 음수는 반대
+# - 0에 가까움 -> 관계가 없는 상태
+
+# temp = np.array([70, 72, 74, 76, 78])
+# vib = np.array([2.0, 2.2, 2.5, 2.7, 3.0])
+# print(round(float(np.corrcoef(temp, vib)[0,1]),3))
+# print(type((np.corrcoef(temp, vib)[0,1])))  # <class 'numpy.float64'>
+# print(type(float(np.corrcoef(temp, vib)[0,1]))) # <class 'float'>
+# print(np.round(np.corrcoef(temp, vib),3))
+# [[1.    0.998]    온도 - 온도, 온도 - 진동
+# [0.998 1.   ]]    진동 - 온도, 진동 - 진동
+# 네 조합을 모두 계산해 줌
+
+# 2D 배열 axis별 통계 활용
+# 행은 센서, 열은 시점인 행렬 axis로 방향으로 정해 통계
+# axis = 1 - 각 행을 옆으로 -> 센서별 통계
+# axis = 0 - 각 열을 아래로 -> 시점별 통계
+
+# data = np.array([[70., 72., 74.],[2.0, 2.2, 2.5]])
+# print(np.round(np.mean(data, axis = 1),2))  # [72.    2.23]
+# print(np.round(np.mean(data, axis = 0),2))  # [36.   37.1  38.25]
+
+# 실습5
+# temp = col(1)
+# cool = col(3)
+# print(np.round(np.corrcoef(temp, cool),3))
+# print(np.round(np.corrcoef(temp, cool)[0,1],2))
+# 강한 상관관계를 가지며 그 값은 반비례한다.
+
+# 실습6
+# temp, vib, cool_e, cool_p = col(1), col(2), col(3), col(4)
+# data = np.stack([temp, vib, cool_e, cool_p])
+# data_mean = np.nanmean(data, axis = 1).round(1)
+# cor = np.round(np.nanstd(data, axis = 1),1)
+# print(data_mean, cor)
+
+# 변화점 탐지
+# - 누적 합으로 찾는 원리
+# - 각 값에서 전체 평균을 빼면 평균보다 작은 값은 음수, 큰 값은 양수
+# - 해당 값들을 앞에서부터 누적하면 평균보다 낮은 구간에서는 계속 내려가고,
+#   평균보다 높은 구간에서는 계속 올라간다.
+# - 그래서 누적 곡선이 가장 낮아지는 자리가 내려가기를 멈추고 올라가기 시작한 자리
+
+# v = np.array([2.0, 2.1, 2.0, 5.0, 5.2, 5.1])
+# cs =np.cumsum(v-np.mean(v))
+# print(np.argmin(cs))    # 2
+
+# 실습7
+# num, temp = col(0), col(1)
+# cs = np.cumsum(temp-np.nanmean(temp))
+# print(int(num[np.argmin(cs)]))
+
+# 실습8
+cy, temp, cool_e, status = col(0), col(1), col(3), col(5)
+def z(a):
+    return np.abs((a-np.nanmean(a)) / np.nanstd(a))
+score = z(temp) + z(cool_e)
+
+print(int(cy[np.argmax(score)]), cy[np.argsort(score)[::-1][:3]].astype(int))
+print(cy[status ==1].astype(int))
