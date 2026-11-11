@@ -64,3 +64,4 @@ print(df.columns)
 sel = df.loc[:9, ["설비ID","비스킷두께","품질등급"]]
 back = df.iloc[-5:]
 print(sel, back)
+
