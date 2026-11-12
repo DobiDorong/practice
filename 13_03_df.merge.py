@@ -55,13 +55,58 @@ master = pd.read_csv(F_MASTER)
 # print(unmatched["설비ID"].head(1).tolist(), len(unmatched)) # ['DIE-C-01'] 15
 
 # 실습2
-m = log.merge(master, on="설비ID")
-m_left = log.merge(master, on="설비ID", how="left")
-m_outer = log.merge(master, on="설비ID", how = "outer")
-print(m.shape, m_left.shape, m_outer.shape)
-# 대장에 C 코드 없음
-unmatched = m_left[m_left["라인"].isna()]
-print(len(unmatched),unmatched["설비ID"].head(1).tolist())
-# print(log.isna().sum())
-unmatched_out = m_outer[m_outer["품질등급"].isna()]
-print(unmatched_out["설비ID"].tolist())
+# m = log.merge(master, on="설비ID")
+# m_left = log.merge(master, on="설비ID", how="left")
+# m_outer = log.merge(master, on="설비ID", how = "outer")
+# print(m.shape, m_left.shape, m_outer.shape)
+# # 대장에 C 코드 없음
+# unmatched = m_left[m_left["라인"].isna()]
+# print(len(unmatched),unmatched["설비ID"].head(1).tolist())
+# # print(log.isna().sum())
+# unmatched_out = m_outer[m_outer["품질등급"].isna()]
+# print(unmatched_out["설비ID"].tolist())
+
+# merge는 옆으로 칸을 이어 붙이고, concat은 아래로 줄을 쌓는다
+# concat은 키 열이 필요 없고, 칸 이름만 맞으면 된다
+
+# pd.concat
+
+# ex) 설비 로그를 1차, 2차로 나눠 받은 경우
+# part1 = log.iloc[:100].reset_index(drop=True)
+# part2 = log.iloc[100:].reset_index(drop=True)
+# print(part1.shape, part2.shape)     # (100, 8) (100, 8)
+
+# stacked = pd.concat([part1, part2])
+# print(stacked.shape)    # (200, 8)
+# print(stacked.index[-3:].tolist())  # [97, 98, 99]
+# print(len(stacked.loc[[0]]))    # 2
+
+# - 번호를 다시 매기기 -> ignore_index
+# renumbered = pd.concat([part1,part2], ignore_index=True)
+# print(int(renumbered.index[-1]))    # 199
+
+# - 칸(열)이 다른 표를 붙이면 -> 빈 칸
+#   붙이기 전에 두 표의 columns 비교
+#   -> set(표1.columns) - set(표2.columns)
+
+# 실습3
+# log = pd.read_csv(F_SHOT)
+# part1 = log.iloc[:100].reset_index(drop=True)
+# part2 = log.iloc[100:].reset_index(drop=True)
+# stacked = pd.concat([part1,part2])
+# print(stacked.shape, stacked.loc[[0]])
+# stacked = pd.concat([part1,part2],ignore_index=True)
+# print(stacked.index[-1])
+
+# 실습4
+log = pd.read_csv(F_SHOT)
+master = pd.read_csv(F_MASTER)
+total = log.merge(master, on="설비ID", how="left")
+print(total.columns.tolist())
+print(total["라인"].value_counts())
+unmatched = total[(total["라인"].notna())]
+print(unmatched.shape)
+qual = unmatched[unmatched["품질등급"] != "양품"]
+print(qual.shape)
+print(qual.sort_values("비스킷두께",ascending=False)
+      [["샷","설비ID","라인","비스킷두께","품질등급"]].head().to_string(index=False))
